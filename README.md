@@ -150,10 +150,6 @@ pip install -e python-sdk/
 No signup required to try Synrix. The evaluation engine has the same API and performance characteristics as production.
 
 ## Links
-
-- [Technical Whitepaper](Synrix_Technical_Whitepaper_v1.9.md)
-- [Comparison vs Mem0, MemGPT, Qdrant, Zep](docs/SYNRIX_VS_REDDIT_ARXIV_MEMORY_PROJECTS.md)
-- [System Architecture Write-Up](docs/SYNRIX_AION_OMEGA_SYSTEM_WRITEUP.md)
 - [GitHub Releases](https://github.com/RYJOX-Technologies/Synrix-Memory-Engine/releases)
 
 ---
