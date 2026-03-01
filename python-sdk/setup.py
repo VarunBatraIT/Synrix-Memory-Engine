@@ -26,7 +26,7 @@ class PostInstallCommand(install):
         except Exception as e:
             # Don't fail installation if binary download fails
             print(f"\n⚠️  Note: Could not auto-download binary: {e}")
-            print("   You can download it manually from: https://github.com/synrix/synrix/releases")
+            print("   You can download it manually from: https://github.com/RYJOX-Technologies/Synrix-Memory-Engine/releases")
 
 
 setup(
@@ -35,9 +35,9 @@ setup(
     description="Local AI memory engine — O(k) retrieval, no embeddings, no cloud, one binary",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    author="SYNRIX Team",
-    author_email="contact@synrix.dev",
-    url="https://github.com/synrix/synrix-python-sdk",
+    author="RYJOX Technologies",
+    author_email="ryjoxtechnologies@gmail.com",
+    url="https://github.com/RYJOX-Technologies/Synrix-Memory-Engine",
     packages=find_packages(exclude=["examples", "tests", "*.tests", "*.tests.*"]),
     python_requires=">=3.8",
     install_requires=[

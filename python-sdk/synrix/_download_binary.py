@@ -48,13 +48,9 @@ def get_binary_info(version="0.1.0"):
         binary_name = "libsynrix.so"
         asset_name = f"synrix-server-free-tier-{version}-{platform_name}"
     
-    # GitHub releases URL
-    # Option 1: Direct from GitHub releases
-    github_url = f"https://github.com/synrix/synrix/releases/download/v{version}/{asset_name}"
-    
-    # Option 2: From your website/CDN (if you have one)
-    # cdn_url = f"https://downloads.synrix.dev/v{version}/{asset_name}"
-    
+    # GitHub releases (repo-specific; override via env if needed)
+    base = os.getenv("SYNRIX_RELEASES_BASE", "https://github.com/RYJOX-Technologies/Synrix-Memory-Engine/releases/download")
+    github_url = f"{base.rstrip('/')}/v{version}/{asset_name}"
     return github_url, binary_name, asset_name
 
 

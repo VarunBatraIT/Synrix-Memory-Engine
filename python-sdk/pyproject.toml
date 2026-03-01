@@ -10,10 +10,10 @@ readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
 authors = [
-    {name = "SYNRIX Team", email = "contact@synrix.dev"}
+    {name = "RYJOX Technologies", email = "ryjoxtechnologies@gmail.com"}
 ]
 maintainers = [
-    {name = "SYNRIX Team", email = "contact@synrix.dev"}
+    {name = "RYJOX Technologies", email = "ryjoxtechnologies@gmail.com"}
 ]
 keywords = [
     "ai-memory",
@@ -80,11 +80,11 @@ all = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/synrix/synrix-python-sdk"
-Documentation = "https://github.com/synrix/synrix-python-sdk#readme"
-Repository = "https://github.com/synrix/synrix-python-sdk"
-"Bug Tracker" = "https://github.com/synrix/synrix-python-sdk/issues"
-Changelog = "https://github.com/synrix/synrix-python-sdk/releases"
+Homepage = "https://github.com/RYJOX-Technologies/Synrix-Memory-Engine"
+Documentation = "https://github.com/RYJOX-Technologies/Synrix-Memory-Engine#readme"
+Repository = "https://github.com/RYJOX-Technologies/Synrix-Memory-Engine"
+"Bug Tracker" = "https://github.com/RYJOX-Technologies/Synrix-Memory-Engine/issues"
+Changelog = "https://github.com/RYJOX-Technologies/Synrix-Memory-Engine/releases"
 
 [project.scripts]
 synrix = "synrix.cli:main"

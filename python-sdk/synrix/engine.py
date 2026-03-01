@@ -15,9 +15,10 @@ import requests
 from .exceptions import SynrixError
 
 
-# Engine download URLs (update with actual release URLs)
-ENGINE_BASE_URL = "https://releases.synrix.dev"
+# Engine download: set SYNRIX_ENGINE_DOWNLOAD_BASE_URL for auto-download (no default)
+ENGINE_BASE_URL = os.getenv("SYNRIX_ENGINE_DOWNLOAD_BASE_URL", "").strip()
 ENGINE_VERSION = "0.1.0"
+GITHUB_RELEASES = "https://github.com/RYJOX-Technologies/Synrix-Memory-Engine/releases"
 
 
 def get_platform_string() -> str:
@@ -127,8 +128,12 @@ def download_engine(progress: bool = True) -> Path:
     engine_filename = get_engine_filename()
     engine_path = get_engine_path()
     
-    # Download URL
-    download_url = f"{ENGINE_BASE_URL}/{engine_filename}"
+    if not ENGINE_BASE_URL:
+        raise SynrixError(
+            "Engine auto-download is not configured. Set SYNRIX_ENGINE_DOWNLOAD_BASE_URL to a base URL, "
+            f"or download the engine manually from {GITHUB_RELEASES}"
+        )
+    download_url = f"{ENGINE_BASE_URL.rstrip('/')}/{engine_filename}"
     
     print(f"Downloading SYNRIX engine for {platform_str}...")
     print(f"URL: {download_url}")

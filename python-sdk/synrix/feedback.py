@@ -6,14 +6,15 @@ All submissions are optional and privacy-respecting.
 """
 
 import json
+import os
 import requests
 from typing import Optional, Dict, Any
 from .telemetry import get_telemetry, TelemetryCollector
 
 
-# Feedback submission endpoint (update when you have a server)
-FEEDBACK_ENDPOINT = "https://feedback.synrix.ai/submit"  # Placeholder
-GITHUB_ISSUES_ENDPOINT = "https://github.com/your-org/synrix-python-sdk/issues/new"
+# Feedback: use GitHub issues (public repo). Custom endpoint via env if needed.
+FEEDBACK_ENDPOINT = os.environ.get("SYNRIX_FEEDBACK_URL", "").strip()
+GITHUB_ISSUES_ENDPOINT = "https://github.com/RYJOX-Technologies/Synrix-Memory-Engine/issues/new"
 
 
 def submit_feedback(
@@ -107,7 +108,9 @@ def _submit_via_api(
     include_telemetry: bool,
     telemetry: Optional[TelemetryCollector]
 ) -> Dict[str, Any]:
-    """Submit feedback via API endpoint"""
+    """Submit feedback via API endpoint (requires SYNRIX_FEEDBACK_URL)."""
+    if not FEEDBACK_ENDPOINT:
+        return {"method": "api", "status": "error", "message": "Set SYNRIX_FEEDBACK_URL or use method='github'"}
     payload = {
         "feedback": feedback,
     }

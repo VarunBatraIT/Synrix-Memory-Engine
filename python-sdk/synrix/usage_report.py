@@ -1,7 +1,7 @@
 """
-Report node usage to backend for warning emails (85%, over limit).
+Report node usage to a backend (e.g. for tier limits / warning emails).
 Fire-and-forget; does not block startup.
-Optional: requires 'requests' to be installed.
+Optional: requires 'requests'. URLs must be set via env (no default endpoints).
 """
 
 import os
@@ -14,14 +14,9 @@ try:
 except ImportError:
     _HAS_REQUESTS = False
 
-SYNRIX_VALIDATE_URL = os.getenv(
-    "SYNRIX_VALIDATE_LICENSE_URL",
-    "https://jdznymdwjvcmhsslewfz.supabase.co/functions/v1/validate-license",
-)
-SYNRIX_UPDATE_USAGE_URL = os.getenv(
-    "SYNRIX_UPDATE_USAGE_URL",
-    "https://jdznymdwjvcmhsslewfz.supabase.co/functions/v1/update-usage",
-)
+# Set via env only; no default URLs (vendor-specific).
+SYNRIX_VALIDATE_URL = os.getenv("SYNRIX_VALIDATE_LICENSE_URL", "").strip()
+SYNRIX_UPDATE_USAGE_URL = os.getenv("SYNRIX_UPDATE_USAGE_URL", "").strip()
 
 
 def report_usage_to_backend(
@@ -32,10 +27,9 @@ def report_usage_to_backend(
 ) -> None:
     """
     Report current node usage to backend (fire-and-forget).
-    Enables warning emails at 85% and over-limit emails.
     instance_id: optional stable id for this lattice so backend can sum across instances.
     """
-    if not license_key or current_usage is None or not _HAS_REQUESTS:
+    if not license_key or current_usage is None or not _HAS_REQUESTS or not SYNRIX_UPDATE_USAGE_URL:
         return
     payload = {"license_key": license_key, "current_usage": int(current_usage)}
     if hardware_id:
