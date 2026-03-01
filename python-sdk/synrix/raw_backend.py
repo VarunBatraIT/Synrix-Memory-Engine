@@ -890,7 +890,7 @@ class RawSynrixBackend:
         Get current usage information for AI agents to report to users.
         
         For usage reporting to the backend, POST to SYNRIX_UPDATE_USAGE_URL (update-usage
-        endpoint), not validate-license. See docs/TIER_AND_LICENSE_SPEC.md.
+        endpoint), not validate-license. Evaluation tier has a 25k node limit.
         
         Returns:
             Dict with keys: 'current', 'limit', 'percentage', 'remaining'

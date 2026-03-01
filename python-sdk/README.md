@@ -9,10 +9,6 @@ SYNRIX provides persistent semantic memory for AI systems, enabling them to reme
 
 **⚠️ Important:** SYNRIX is a **semantic memory system**, not a traditional knowledge graph. SYNRIX does **not** support arbitrary graph traversal, edge queries, or RDF-style relations. It uses prefix-based semantic queries optimized for agent memory workloads.
 
-> **📖 Documentation:**
-> - **Why not a knowledge graph?** [`SYNRIX_VS_KNOWLEDGE_GRAPH.md`](../docs/technical/SYNRIX_VS_KNOWLEDGE_GRAPH.md) - Complete comparison
-> - **How SYNRIX achieves KG benefits:** [`SYNRIX_ARCHITECTURAL_INNOVATIONS.md`](../docs/technical/SYNRIX_ARCHITECTURAL_INNOVATIONS.md) - Deep dive into architectural innovations
-
 ---
 
 ## 🚀 Quick Start
@@ -25,9 +21,9 @@ pip install synrix
 
 Or install from source:
 ```bash
-git clone https://github.com/synrix/synrix-python-sdk
-cd synrix-python-sdk
-pip install -e .
+git clone https://github.com/RYJOX-Technologies/Synrix-Memory-Engine
+cd Synrix-Memory-Engine
+pip install -e python-sdk/
 ```
 
 ### 2. Install the Engine
@@ -58,7 +54,7 @@ chmod +x synrix-server-evaluation-0.1.0-linux-x86_64
 
 **Free Evaluation Engine:**
 - ✅ Single node, local-only
-- ✅ Hard limits (25k nodes free tier; see docs/TIER_AND_LICENSE_SPEC.md)
+- ✅ Hard limits (25k nodes free tier)
 - ✅ Perfect for development and evaluation
 - ✅ No signup required
 - ⚠️ **Note:** Evaluation mode enforces limits to prevent misuse and is not representative of production-scale performance.
@@ -125,7 +121,7 @@ SYNRIX is a **local-first semantic memory system** designed for AI applications.
 - ❌ Not a traditional database (no SQL, no flexible schemas)
 - ✅ It's a **semantic memory system** optimized for structured agent memory
 
-> **📖 Why not a knowledge graph?** See [`docs/technical/SYNRIX_VS_KNOWLEDGE_GRAPH.md`](../docs/technical/SYNRIX_VS_KNOWLEDGE_GRAPH.md) for a detailed comparison.
+**Why not a knowledge graph?** SYNRIX uses prefix-based semantic naming and O(k) retrieval; it does not support graph traversal, edges, or RDF. It is optimized for agent memory and structured semantic data.
 
 ### Semantic Memory System vs Vector Database
 
@@ -195,8 +191,6 @@ If you have 1 million nodes but only 100 match `ISA_*`, a SYNRIX query only scan
 ---
 
 ## 🎯 Use Cases
-
-> **📖 For detailed use case guidance, see [`USE_CASES.md`](USE_CASES.md)**
 
 ### AI Agent Memory (Primary Use Case)
 Store what the agent learns and recall patterns using **namespace prefixes**:
@@ -305,7 +299,7 @@ This SDK is the **single Python entry point** for Synrix: core API, agent memory
 
 - [`examples/rag_simple_demo.py`](examples/rag_simple_demo.py), [`examples/rag_demo.py`](examples/rag_demo.py), [`examples/rag_demo_kb.py`](examples/rag_demo_kb.py) — require the **synrix_rag** package (e.g. from synrix-rag-sdk).
 
-See [`examples/README.md`](examples/README.md) for more.
+See [examples/README.md](examples/README.md) for the full list.
 
 ---
 
@@ -320,16 +314,16 @@ pip install synrix
 
 ### From Source
 ```bash
-git clone https://github.com/synrix/synrix-python-sdk
-cd synrix-python-sdk
-pip install -e .
+git clone https://github.com/RYJOX-Technologies/Synrix-Memory-Engine
+cd Synrix-Memory-Engine
+pip install -e python-sdk/
 ```
 
 ### Development Installation
 ```bash
-git clone https://github.com/synrix/synrix-python-sdk
-cd synrix-python-sdk
-pip install -e ".[dev]"
+git clone https://github.com/RYJOX-Technologies/Synrix-Memory-Engine
+cd Synrix-Memory-Engine
+pip install -e "python-sdk/[dev]"
 ```
 
 ---
@@ -444,7 +438,7 @@ client = SynrixClient(host="localhost", port=6334, timeout=30)
 - `query_prefix(prefix: str, collection: str, limit: int = 100) -> List[Dict]`
 - `close() -> None`
 
-See the [full API documentation](https://github.com/synrix/synrix-python-sdk#api-reference) for details.
+See the [API reference](https://github.com/RYJOX-Technologies/Synrix-Memory-Engine#readme) for details.
 
 ---
 
@@ -458,13 +452,13 @@ Contributions are welcome! This is an open-source SDK (MIT License).
 4. Add tests if applicable
 5. Submit a pull request
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md) for guidelines.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ---
 
 ## 📄 License
 
-This SDK is licensed under the **MIT License** - see [`LICENSE`](LICENSE) for details.
+This SDK is licensed under the **MIT License** - see [LICENSE](../LICENSE) for details.
 
 **Note:** The SYNRIX engine is distributed separately under a commercial license. The SDK (this repository) is fully open source.
 
@@ -473,9 +467,9 @@ This SDK is licensed under the **MIT License** - see [`LICENSE`](LICENSE) for de
 ## 🔗 Links
 
 - **Engine Download**: https://releases.synrix.dev
-- **Documentation**: https://github.com/synrix/synrix-python-sdk#readme
-- **Issues**: https://github.com/synrix/synrix-python-sdk/issues
-- **Releases**: https://github.com/synrix/synrix-python-sdk/releases
+- **Repository**: https://github.com/RYJOX-Technologies/Synrix-Memory-Engine
+- **Issues**: https://github.com/RYJOX-Technologies/Synrix-Memory-Engine/issues
+- **Releases**: https://github.com/RYJOX-Technologies/Synrix-Memory-Engine/releases
 
 ---
 
@@ -529,4 +523,4 @@ SYNRIX is built with a focus on:
 
 ---
 
-**Questions?** Open an issue or check the [documentation](https://github.com/synrix/synrix-python-sdk#readme).
+**Questions?** Open an issue or check the [repository](https://github.com/RYJOX-Technologies/Synrix-Memory-Engine#readme).
