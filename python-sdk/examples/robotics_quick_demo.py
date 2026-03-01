@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
 """
-SYNRIX Robotics – public demo
+SYNRIX Robotics – quick demo
 
 Shows RoboticsNexus: store sensor data, set/get state, log an action.
 All data persists in the Synrix lattice (crash-safe, local).
 
-Run (from robotics-sdk root, with SYNRIX_LIB_PATH set):
-  pip install -e .
-  python -m synrix.examples.robotics_quick_demo
+Run from repo root with SYNRIX_LIB_PATH set to the directory containing libsynrix.dll:
+  cd python-sdk && pip install -e . && python examples/robotics_quick_demo.py
 """
 
 import os
 import sys
 
-if __name__ == "__main__" and "__file__" in dir():
-    _root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Allow running from examples/ or from repo root
+if __name__ == "__main__":
+    _root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     if _root not in sys.path:
         sys.path.insert(0, _root)
 
@@ -25,12 +25,12 @@ def main():
 
     try:
         from synrix.robotics import RoboticsNexus
-    except ImportError:
-        print("ERROR: synrix not installed. From robotics-sdk: pip install -e .")
+    except ImportError as e:
+        print("ERROR: synrix not installed. From python-sdk: pip install -e .")
         return 1
     except Exception as e:
         print("ERROR:", e)
-        print("Set SYNRIX_LIB_PATH to the directory containing libsynrix.dll")
+        print("Set SYNRIX_LIB_PATH to the directory containing libsynrix.dll (or libsynrix.so on Linux).")
         return 1
 
     robot = RoboticsNexus(robot_id="demo_robot")

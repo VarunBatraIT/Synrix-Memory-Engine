@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 """
-SYNRIX RAG – public demo
+SYNRIX RAG – simple demo
 
 Minimal RAG: ingest a few documents, run a semantic search, get context for an LLM.
-Uses local embeddings (no API key). Synrix stores documents and vectors; large
-documents use chunked storage automatically.
+Uses local embeddings (no API key). Synrix stores documents; large documents use chunked storage.
 
-Run (with agent-memory-sdk + synrix-rag-sdk + SYNRIX_LIB_PATH set):
-  pip install -e ../agent-memory-sdk && pip install -e ..
-  python examples/rag_simple_demo.py
+Requires: synrix_rag package (pip install from synrix-rag-sdk or equivalent).
+Run from repo root with SYNRIX_LIB_PATH set:
+  cd python-sdk && pip install -e . && python examples/rag_simple_demo.py
 """
 
 import os
@@ -42,10 +41,8 @@ def main():
 
     try:
         from synrix_rag import RAGMemory
-    except ImportError as e:
-        print("ERROR: synrix_rag not installed or not on PYTHONPATH.")
-        print("       From synrix-rag-sdk root run: pip install -e .")
-        print("       Then: python examples/rag_simple_demo.py")
+    except ImportError:
+        print("ERROR: synrix_rag not installed. Install from synrix-rag-sdk: pip install -e path/to/synrix-rag-sdk")
         return 1
 
     rag = RAGMemory(
@@ -54,7 +51,6 @@ def main():
         synrix_client=synrix_client,
     )
 
-    # Two short documents
     rag.add_document(text="Synrix is a local memory engine for AI agents. It stores data by prefix and supports fast prefix queries.", metadata={"source": "intro"})
     rag.add_document(text="To use RAG with Synrix you add documents with add_document and retrieve with search or get_context for your LLM.", metadata={"source": "usage"})
     print("1. Ingested 2 documents.\n")

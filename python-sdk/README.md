@@ -284,26 +284,28 @@ results = vectorstore.similarity_search("query", k=5)  # Fuzzy matching
 
 ## 📚 Examples
 
-### Beginner-Friendly
+This SDK is the **single Python entry point** for Synrix: core API, agent memory, robotics, and example scripts all live here.
 
-**Start here:** [`examples/first_knowledge_graph.py`](examples/first_knowledge_graph.py)
-- Perfect for complete beginners
-- Interactive, step-by-step tutorial
-- No server needed (uses mock client)
-- Explains concepts as you go
+### Hero demos (raw backend — set `SYNRIX_LIB_PATH` or `LD_LIBRARY_PATH`)
 
-**Quick API demo:** [`examples/quickstart.py`](examples/quickstart.py)
-- Shows the API in action
-- ~30 seconds to run
-- Uses mock client (no server required)
+| Example | Description |
+|--------|-------------|
+| [`examples/hello_memory.py`](examples/hello_memory.py) | Local memory, prefix queries |
+| [`examples/ai_agent_synrix_demo.py`](examples/ai_agent_synrix_demo.py) | Multi-session agent memory |
+| [`examples/test_scale_nodes.py`](examples/test_scale_nodes.py) | O(k) scaling (e.g. 100K nodes) |
+| [`examples/benchmark_synrix.py`](examples/benchmark_synrix.py) | Latency/throughput benchmark |
+| [`examples/reasoning_chain_benchmark.py`](examples/reasoning_chain_benchmark.py) | 18-query reasoning chain (Synrix vs simulated Qdrant/Mem0) |
 
-**Full example:** [`examples/hello_memory.py`](examples/hello_memory.py)
-- Complete workflow
-- Error handling
-- Real-world usage patterns
-- Requires engine running
+### Robotics
 
-See [`examples/README.md`](examples/README.md) for all examples.
+- **Module:** `synrix.robotics.RoboticsNexus` (sensors, state, actions, checkpoints)
+- **Demo:** [`examples/robotics_quick_demo.py`](examples/robotics_quick_demo.py)
+
+### RAG examples
+
+- [`examples/rag_simple_demo.py`](examples/rag_simple_demo.py), [`examples/rag_demo.py`](examples/rag_demo.py), [`examples/rag_demo_kb.py`](examples/rag_demo_kb.py) — require the **synrix_rag** package (e.g. from synrix-rag-sdk).
+
+See [`examples/README.md`](examples/README.md) for more.
 
 ---
 

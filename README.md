@@ -8,11 +8,15 @@
 [![OpenAI API](https://img.shields.io/badge/api-openai--compatible-blue)](https://platform.openai.com/)
 [![License](https://img.shields.io/badge/license-MIT%20%2F%20Proprietary-lightgrey)](LICENSE)
 
+**Single entry point:** The Python SDK and all demos live in **`python-sdk/`**. Use that directory for installation and examples.
+
 ## Install
 
 ```bash
 pip install synrix
 ```
+
+Or from source: `cd python-sdk && pip install -e .`
 
 ## First Query (3 lines)
 
@@ -41,18 +45,21 @@ No server. No Docker. No API key. No embedding model.
 
 ## Demos
 
-Run any of these after `pip install synrix` — no server, no setup:
+All demos are in **`python-sdk/examples/`**. Run after `pip install -e python-sdk/` with `SYNRIX_LIB_PATH` (or `LD_LIBRARY_PATH` on Linux) set to the directory containing the engine DLL/.so. No server required (raw backend).
 
 ```bash
-# Local RAG without embeddings — prefix-semantic document retrieval
-python3 python-sdk/examples/hello_memory.py
+# Core demos
+python python-sdk/examples/hello_memory.py
+python python-sdk/examples/ai_agent_synrix_demo.py
+python python-sdk/examples/test_scale_nodes.py
+python python-sdk/examples/benchmark_synrix.py
+python python-sdk/examples/reasoning_chain_benchmark.py
 
-# Multi-session agent memory — cross-session recall in microseconds
-python3 python-sdk/examples/ai_agent_synrix_demo.py
-
-# O(k) scaling proof — 100K nodes, query time scales with matches not corpus
-python3 python-sdk/examples/test_scale_nodes.py
+# Robotics (synrix.robotics)
+python python-sdk/examples/robotics_quick_demo.py
 ```
+
+RAG examples (`rag_demo.py`, `rag_simple_demo.py`, `rag_demo_kb.py`) require the **synrix_rag** package (e.g. from synrix-rag-sdk).
 
 ## How It Works
 

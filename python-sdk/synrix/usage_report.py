@@ -1,6 +1,7 @@
 """
 Report node usage to backend for warning emails (85%, over limit).
 Fire-and-forget; does not block startup.
+Optional: requires 'requests' to be installed.
 """
 
 import os
