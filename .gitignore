@@ -14,7 +14,6 @@ docs/LAUNCH_PLAN_TECHNICAL_SPEC.md
 docs/WINDOWS_LINUX_ALIGNMENT.md
 docs/LINUX_COHESION_CHECKLIST.md
 docs/RELEASE.md
-README.md
 
 # === C source (build locally; release binaries via GitHub Releases) ===
 src/
