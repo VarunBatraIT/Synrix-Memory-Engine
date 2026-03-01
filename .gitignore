@@ -4,6 +4,9 @@
 HN_LAUNCH_ANALYSIS.md
 MEDIUM_ARTICLE_EDITS.md
 
+# === C source (build locally; release binaries via GitHub Releases) ===
+src/
+
 # === Secrets (never commit) ===
 synrix_license_private.key
 *.key
