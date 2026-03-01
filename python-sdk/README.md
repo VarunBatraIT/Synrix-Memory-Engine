@@ -40,12 +40,8 @@ This installs the evaluation engine to `~/.synrix/bin/` for your platform.
 **Quick start (Linux) – direct engine (libsynrix.so):**  
 Same `pip install -e .` as above. Provide the engine by either copying `libsynrix.so` (and any runtime deps) into the `synrix/` package directory, or setting **`SYNRIX_LIB_PATH`** or **`LD_LIBRARY_PATH`** to the directory containing `libsynrix.so`. Build from repo root: `./build/linux/build.sh`, then e.g. `export LD_LIBRARY_PATH=/path/to/build/linux/out:$LD_LIBRARY_PATH`.
 
-**Manual download (optional):**
-```bash
-# Linux x86_64
-wget https://releases.synrix.dev/synrix-server-evaluation-0.1.0-linux-x86_64
-chmod +x synrix-server-evaluation-0.1.0-linux-x86_64
-```
+**Manual download (optional):**  
+Download the engine for your platform from [GitHub Releases](https://github.com/RYJOX-Technologies/Synrix-Memory-Engine/releases). On Linux/macOS, make the binary executable: `chmod +x synrix-server-evaluation-...`.
 
 **Run the engine in evaluation mode (free, local-only):**
 ```bash
@@ -466,7 +462,7 @@ This SDK is licensed under the **MIT License** - see [LICENSE](../LICENSE) for d
 
 ## 🔗 Links
 
-- **Engine Download**: https://releases.synrix.dev
+- **Engine Download**: https://github.com/RYJOX-Technologies/Synrix-Memory-Engine/releases
 - **Repository**: https://github.com/RYJOX-Technologies/Synrix-Memory-Engine
 - **Issues**: https://github.com/RYJOX-Technologies/Synrix-Memory-Engine/issues
 - **Releases**: https://github.com/RYJOX-Technologies/Synrix-Memory-Engine/releases
@@ -489,7 +485,7 @@ You can use `SynrixMockClient()` for testing and examples, but for real usage, y
 
 ### Where do I download the engine?
 
-Download from: https://releases.synrix.dev
+Download from: https://github.com/RYJOX-Technologies/Synrix-Memory-Engine/releases
 
 ### Is there a free version of the engine?
 
