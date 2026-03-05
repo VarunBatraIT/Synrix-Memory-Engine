@@ -8,6 +8,7 @@ docs/SDK_CONSOLIDATION_RECOMMENDATION.md
 docs/Synrix v2.0.md
 docs/JOSEPH_PERSISTENCE_ISSUE.md
 docs/TEST_AS_USER.md
+docs/CURRENT_STATUS_AND_NEXT_STEPS.md
 LICENSING README.md
 BENCHMARK_METRICS.md
 _archive_synrix-windows-build/
@@ -18,11 +19,14 @@ _archive_synrix-windows-build/
 build/windows/CURSOR_CONTEXT.md
 build/windows/tools/DISCORD_KEY_TRANSFER.md
 build/windows/tools/DECRYPT_INSTRUCTIONS.md
+build/windows/build.sh
+build/windows/*.sh
 supabase/
 synrix-sdks/
 synrix-windows-release.zip.sha256
 synrix-windows.zip.sha256
-scripts/license/
+scripts/
+scripts/**
 
 # === Docs pending redaction (untrack until secret-sauce removed) ===
 # (none – redactions complete; ARCHITECTURE, JEPSEN, LAUNCH_PLAN, WINDOWS_LINUX, LINUX_COHESION, RELEASE, SYNRIX_AION_OMEGA are now public-safe)
