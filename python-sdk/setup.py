@@ -31,7 +31,7 @@ class PostInstallCommand(install):
 
 setup(
     name="synrix",
-    version="0.2.0",
+    version="1.0.0",
     description="Local AI memory engine — O(k) retrieval, no embeddings, no cloud, one binary",
     long_description=long_description,
     long_description_content_type="text/markdown",
