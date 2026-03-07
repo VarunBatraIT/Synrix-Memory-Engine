@@ -87,6 +87,34 @@ dist/
 *.lattice.wal
 *.wal
 
+# === Virtual environments ===
+.venv*/
+venv/
+env/
+
+# === Local build artifacts ===
+build/
+_archive/
+python-sdk/_archive/
+python-sdk/benchmark_results/
+demos/
+node_modules/
+
+# === Proprietary server C source ===
+server_essentials/
+
+# === Scratch / session files ===
+docs/LICENSE_FLOW.md
+arch_github.txt
+benchmarks_github.txt
+final_github_files.txt
+readme_github.txt
+repo_files.txt
+check_dll_exports.py
+verify_ok_fix.ps1
+package.json
+package-lock.json
+
 # === IDE / OS ===
 .idea/
 .vscode/
