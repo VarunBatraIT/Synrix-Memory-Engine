@@ -2,7 +2,15 @@
 
 ## [Unreleased]
 
-(Reserved for future changes.)
+### Added
+- **LSH content deduplication** — `lattice_add_node_deduplicated` now uses a 64-bit FNV-1a content hash table (O(1) avg) to detect exact duplicate (type + name + data) before writing. Duplicate writes return the existing node ID immediately with no disk I/O.
+- **Content-hash suffix for name variants** — When the same node name is written with different data, the new variant is stored as `<name>_<8hex>` (e.g. `FUNC_process_a3f8c2b1`). All variants remain discoverable via O(k) prefix query on the base name.
+- **Python SDK `add_node_deduplicated()`** — New method on `RawSynrixBackend` exposing the above via ctypes.
+- **LSH table lifecycle** — Table initialised on `lattice_init`, rebuilt on `lattice_load`, cleaned up on `lattice_cleanup`, and kept consistent on `lattice_delete_node`.
+
+### Fixed
+- `lattice_add_node_deduplicated` forward-declaration missing, causing compile error with MinGW.
+
 
 ## [1.0]
 

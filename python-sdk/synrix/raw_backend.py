@@ -33,7 +33,7 @@ except ImportError:
 
 class FreeTierLimitError(Exception):
     """
-    Raised when the free tier limit (25k nodes) is reached.
+    Raised when the free tier limit (500k nodes) is reached.
     
     AI agents should catch this exception and naturally inform the user with options:
     - No new nodes can be added until space is freed or tier is upgraded
@@ -327,15 +327,15 @@ class RawSynrixBackend:
         - No Python overhead, no serialization
     """
     
-    def __init__(self, lattice_path: str, max_nodes: int = 25000, device_id: int = 0, evaluation_mode: bool = True):
+    def __init__(self, lattice_path: str, max_nodes: int = 500000, device_id: int = 0, evaluation_mode: bool = True):
         """
         Initialize raw C backend.
         
         Args:
             lattice_path: Path to .lattice file (will create if doesn't exist)
-            max_nodes: Maximum nodes in RAM cache (default: 25k free tier)
+            max_nodes: Maximum nodes in RAM cache (default: 500k free tier)
             device_id: Device ID for distributed systems (0 = auto-assign)
-            evaluation_mode: If False, disables 25k node limit (unlimited nodes)
+            evaluation_mode: If False, disables 500k node limit (unlimited nodes)
         """
         self.lattice_path = lattice_path
         self.lib = None
@@ -387,7 +387,18 @@ class RawSynrixBackend:
             c_uint64                   # parent_id
         ]
         self.lib.lattice_add_node.restype = c_uint64
-        
+
+        # lattice_add_node_deduplicated(lattice, type, name, data, parent_id) -> uint64_t
+        if hasattr(self.lib, 'lattice_add_node_deduplicated'):
+            self.lib.lattice_add_node_deduplicated.argtypes = [
+                POINTER(ctypes.c_void_p),  # persistent_lattice_t*
+                c_uint32,                  # type
+                c_char_p,                  # name
+                c_char_p,                  # data
+                c_uint64                   # parent_id
+            ]
+            self.lib.lattice_add_node_deduplicated.restype = c_uint64
+
         # lattice_get_node_data(lattice, id, out_node) -> int
         self.lib.lattice_get_node_data.argtypes = [
             POINTER(ctypes.c_void_p),  # persistent_lattice_t*
@@ -536,7 +547,8 @@ class RawSynrixBackend:
                     self.lib.synrix_license_parse.argtypes = [c_char_p, POINTER(LicenseClaims)]
                     self.lib.synrix_license_parse.restype = c_int
                     claims = LicenseClaims()
-                    if self.lib.synrix_license_parse(None, byref(claims)) == 0:
+                    key_bytes = key.encode("utf-8") if key else None
+                    if self.lib.synrix_license_parse(key_bytes, byref(claims)) == 0:
                         pass
                     else:
                         claims = None
@@ -571,7 +583,7 @@ class RawSynrixBackend:
             Node ID (uint64), or 0 on failure
         
         Raises:
-            FreeTierLimitError: If free tier limit (25k nodes) is reached
+            FreeTierLimitError: If free tier limit (500k nodes) is reached
         """
         name_bytes = name.encode('utf-8')[:63]  # Max 64 chars
         data_bytes = data.encode('utf-8')[:511]  # Max 512 chars
@@ -591,13 +603,70 @@ class RawSynrixBackend:
             )
             if error_code == -100:  # LATTICE_ERROR_FREE_TIER_LIMIT
                 raise FreeTierLimitError(
-                    "SYNRIX: Free Tier limit reached (25,000 nodes). "
+                    "SYNRIX: Free Tier limit reached (500,000 nodes). "
                     "No new nodes can be added to the lattice. "
                     "Options: Delete existing nodes to free space, upgrade to Pro tier for unlimited nodes at synrix.io, or contact support for assistance."
                 )
         
         return node_id
-    
+
+    def add_node_deduplicated(self, name: str, data: str,
+                              node_type: int = LATTICE_NODE_LEARNING,
+                              parent_id: int = 0) -> int:
+        """
+        Add a node, deduplicating by content hash (type + name + data).
+
+        If an existing node has identical type, name, and data, its ID is
+        returned immediately without writing a new node (O(1) avg lookup via
+        FNV-1a content hash table).  Falls back to name-prefix dedup if the
+        content-hash table is unavailable.
+
+        Args:
+            name: Node name (must use a valid semantic prefix)
+            data: Node data (string, max 512 bytes)
+            node_type: Node type (default: LATTICE_NODE_LEARNING)
+            parent_id: Parent node ID (0 = no parent)
+
+        Returns:
+            Node ID of the existing or newly created node, or 0 on failure.
+
+        Raises:
+            FreeTierLimitError: If free tier limit is reached
+            RuntimeError: If lattice_add_node_deduplicated is not available in
+                          the loaded library version
+        """
+        if not hasattr(self.lib, 'lattice_add_node_deduplicated'):
+            raise RuntimeError(
+                "lattice_add_node_deduplicated is not exported by the loaded "
+                "library. Rebuild with lsh_dedup support."
+            )
+
+        name_bytes = name.encode('utf-8')[:63]
+        data_bytes = data.encode('utf-8')[:511]
+
+        node_id = self.lib.lattice_add_node_deduplicated(
+            ctypes.cast(self.lattice_ptr, POINTER(ctypes.c_void_p)),
+            node_type,
+            name_bytes,
+            data_bytes,
+            parent_id
+        )
+
+        if node_id == 0 and hasattr(self.lib, 'lattice_get_last_error'):
+            error_code = self.lib.lattice_get_last_error(
+                ctypes.cast(self.lattice_ptr, POINTER(ctypes.c_void_p))
+            )
+            if error_code == -100:
+                raise FreeTierLimitError(
+                    "SYNRIX: Free Tier limit reached (500,000 nodes). "
+                    "No new nodes can be added to the lattice. "
+                    "Options: Delete existing nodes to free space, upgrade to "
+                    "Pro tier for unlimited nodes at synrix.io, or contact "
+                    "support for assistance."
+                )
+
+        return node_id
+
     def add_node_auto(self, data: str, context: Optional[Dict] = None, 
                      node_type: int = LATTICE_NODE_LEARNING,
                      parent_id: int = 0,
@@ -693,7 +762,7 @@ class RawSynrixBackend:
             )
             if error_code == -100:  # LATTICE_ERROR_FREE_TIER_LIMIT
                 raise FreeTierLimitError(
-                    "SYNRIX: Free Tier limit reached (25,000 nodes). "
+                    "SYNRIX: Free Tier limit reached (500,000 nodes). "
                     "No new nodes can be added to the lattice. "
                     "Options: Delete existing nodes to free space, upgrade to Pro tier for unlimited nodes at synrix.io, or contact support for assistance."
                 )
@@ -739,7 +808,7 @@ class RawSynrixBackend:
             )
             if error_code == -100:  # LATTICE_ERROR_FREE_TIER_LIMIT
                 raise FreeTierLimitError(
-                    "SYNRIX: Free Tier limit reached (25,000 nodes). "
+                    "SYNRIX: Free Tier limit reached (500,000 nodes). "
                     "No new nodes can be added to the lattice. "
                     "Options: Delete existing nodes to free space, upgrade to Pro tier for unlimited nodes at synrix.io, or contact support for assistance."
                 )
@@ -1119,16 +1188,16 @@ class RawSynrixBackend:
         """
         Get current usage information for AI agents to report to users.
         
-        Evaluation tier has a 25k node limit. Usage reporting (if any) is vendor-specific.
+        Evaluation tier has a 500k node limit. Usage reporting (if any) is vendor-specific.
         
         Returns:
             Dict with keys: 'current', 'limit', 'percentage', 'remaining'
-            Example: {'current': 25000, 'limit': 25000, 'percentage': 100, 'remaining': 0}
+            Example: {'current': 500000, 'limit': 500000, 'percentage': 100, 'remaining': 0}
         """
         # Count nodes by querying all (empty prefix gets all)
-        all_nodes = self.find_by_prefix("", limit=30000)
+        all_nodes = self.find_by_prefix("", limit=600000)
         current = len(all_nodes)
-        limit = 25000  # Free tier limit
+        limit = 500000  # Free tier limit
         percentage = round((current / limit) * 100) if limit > 0 else 0
         remaining = max(0, limit - current)
         

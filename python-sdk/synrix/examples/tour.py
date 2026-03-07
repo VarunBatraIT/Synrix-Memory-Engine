@@ -41,19 +41,19 @@ def run_tour():
 ║                                                            ║
 ║  Welcome to SYNRIX!                                        ║
 ║                                                            ║
-║  Let's build your first knowledge graph in a few minutes. ║
+║  Let's build your first prefix store in a few minutes.   ║
 ║                                                            ║
 ╚════════════════════════════════════════════════════════════╝
 """)
     
-    print_info("What is a knowledge graph?")
+    print_info("What is SYNRIX?")
     print("""
-A knowledge graph stores information as connected nodes.
-Think of it like Wikipedia, but structured for computers:
+SYNRIX is a fast, crash-safe prefix store for AI agents.
+It stores information as named nodes:
 
-  • Each node = a concept or fact
-  • Prefixes organize related knowledge (LANGUAGE:, CONCEPT:)
-  • You can query by prefix to retrieve related ideas instantly
+  • Each node = a name + data (up to 512 bytes)
+  • Prefixes organize related nodes (LANGUAGE:, CONCEPT:)
+  • Prefix queries return only matching nodes - O(k), not O(n)
 """)
     
     input("\nPress Enter to begin... ")
@@ -61,7 +61,7 @@ Think of it like Wikipedia, but structured for computers:
     # ------------------------------------------------------------
     # STEP 1 — Create the graph
     # ------------------------------------------------------------
-    print_step(1, "Creating Your Knowledge Graph")
+    print_step(1, "Creating Your Prefix Store")
     
     try:
         client = SynrixMockClient()
@@ -70,7 +70,7 @@ Think of it like Wikipedia, but structured for computers:
         print(f"❌ Unexpected error: {e}")
         return
     
-    print_success("Knowledge graph created!")
+    print_success("Prefix store ready!")
     
     # ------------------------------------------------------------
     # STEP 2 — Add nodes
@@ -96,7 +96,7 @@ Think of it like Wikipedia, but structured for computers:
     # ------------------------------------------------------------
     # STEP 3 — Run queries
     # ------------------------------------------------------------
-    print_step(3, "Querying Your Graph")
+    print_step(3, "Querying by Prefix")
     
     print("\n🔍 Finding all programming languages...")
     languages = client.query_prefix("LANGUAGE:", collection="my_first_graph")
@@ -114,14 +114,14 @@ Think of it like Wikipedia, but structured for computers:
     # Summary + Next Steps
     # ------------------------------------------------------------
     print("\n" + "=" * 60)
-    print("🎉 Success! You built your first knowledge graph.")
+    print("Success! You built your first SYNRIX prefix store.")
     print("=" * 60)
     print("""
-📚 What you learned:
+What you learned:
 
-  • Knowledge graphs store facts as nodes
-  • Prefixes group related information
-  • Querying by prefix retrieves structured knowledge quickly
+  • SYNRIX stores facts as named nodes (name + data)
+  • Prefixes group related nodes
+  • Prefix queries retrieve only matching nodes - fast at any scale
 
 🚀 Next steps:
 

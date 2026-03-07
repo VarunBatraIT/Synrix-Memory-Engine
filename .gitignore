@@ -103,7 +103,55 @@ node_modules/
 # === Proprietary server C source ===
 server_essentials/
 
-# === Scratch / session files ===
+# === Local dev tooling (not for GitHub) ===
+build_project_lattice.py
+query_lattice.py
+project_knowledge.lattice
+project_knowledge.lattice.wal
+
+# === Internal dev notes (scratch/implementation notes, not for GitHub) ===
+FIX_APPLIED_OK_INDEXING.md
+OK_INDEXING_FIX_VERIFIED.md
+LSH_DEDUP_IMPLEMENTATION.md
+PERSISTENT_LATTICE_FIXES.md
+
+# === Local test scripts (root-level, not organized) ===
+test_lsh_dedup.py
+test_chunked_data.py
+test_final_verification.py
+
+# === Example scratch files (unreviewed, not for GitHub) ===
+python-sdk/examples/INTEGRATION_EXAMPLE.py
+python-sdk/examples/STORAGE_FORMATS_EXAMPLE.py
+python-sdk/examples/agent_benchmark.py
+python-sdk/examples/agent_demo*.py
+python-sdk/examples/devin_live_demo.py
+python-sdk/examples/diagnose_corruption.py
+python-sdk/examples/example_real_world_migration.py
+python-sdk/examples/feedback_example.py
+python-sdk/examples/langchain_synrix*.py
+python-sdk/examples/llm_synrix_integration.py
+python-sdk/examples/migrate_to_synrix.py
+python-sdk/examples/mock_customer_demo.py
+python-sdk/examples/monday_demo_crazy.py
+python-sdk/examples/my_workflow_example.py
+python-sdk/examples/preload_demo_data.py
+python-sdk/examples/profile_*.py
+python-sdk/examples/reasoning_chain_benchmark*.py
+python-sdk/examples/setup_kg*.py
+python-sdk/examples/simple_benchmark.py
+python-sdk/examples/smart_codebase_ingester.py
+python-sdk/examples/store_codebase.py
+python-sdk/examples/symbolic_ai_general_tasks.py
+python-sdk/examples/synrix_growth_demo.py
+python-sdk/examples/test_*.py
+python-sdk/examples/vc_demo*.py
+python-sdk/examples/cursor_agent*.py
+python-sdk/examples/cursor_native_integration.c
+python-sdk/examples/cursor_synrix_cli.py
+python-sdk/examples/cursor_indexing_off_demo.py
+
+
 docs/LICENSE_FLOW.md
 arch_github.txt
 benchmarks_github.txt
