@@ -2,7 +2,9 @@
 
 ## What Is the Lattice?
 
-Synrix stores data as a **lattice** — a dense, memory-mapped array of fixed-size nodes. Not a graph. Not a key-value store. A rigid, cache-optimal structure with mathematically predictable access costs.
+Synrix stores data as a flat, memory-mapped array of fixed-size nodes — a lattice. Not a graph (no edges, no traversal). Not a key-value store (nodes carry typed payload structs, not opaque values). A rigid, cache-optimal structure with mathematically predictable access costs.
+
+The term is literal: every node occupies a fixed number of bytes at a known offset. Finding a node by ID is arithmetic — `offset = id * node_size`. No B-tree. No hash collision. No pointer chasing. That is why O(1) lookup is real, not amortized.
 
 ### Core Design
 

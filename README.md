@@ -18,7 +18,9 @@ Synrix was.
 
 ## What Synrix is
 
-A binary lattice — a flat, memory-mapped array of fixed-size, cache-aligned nodes. Every node is reachable in O(1) by ID. Every prefix group is reachable in O(k) where k is the number of matching results, regardless of total dataset size. No query planner. No embedding model. No network round-trip in the direct access path.
+A flat, memory-mapped array of fixed-size, cache-aligned nodes — what we call a lattice. Every node is reachable in O(1) by ID. Every prefix group is reachable in O(k) where k is the number of matching results, regardless of total dataset size. No query planner. No embedding model. No network round-trip in the direct access path.
+
+The name is literal: the file is a dense, binary-encoded grid of fixed-size structs. No linked lists. No B-trees. No dynamic allocation. The offset of any node is arithmetic — multiply the ID by the node size, seek, read. That is what makes O(1) lookup real rather than amortized.
 
 The engine is written in C. It runs on the same machine as your agent. It uses `mmap` so reads hit RAM, not disk. Writes go through a WAL before they hit the file, so a `SIGKILL` mid-write loses nothing. The node layout is fixed — 1216 bytes, 64-byte cache-aligned — so the CPU prefetcher works with you, not against you.
 
